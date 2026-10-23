@@ -14,7 +14,7 @@ export default function Footer() {
           className="mb-5"
           eyebrow="Save the Date"
           title={`${day}.${month}.${year}`}
-          subtitle="Cảm ơn vì đã ghé thă trang cưới của Quang Bách & Hồng Vân"
+          subtitle="Cảm ơn vì đã ghé thăm trang cưới của Quang Bách & Hồng Vân."
         />
       </Section>
     </footer>
