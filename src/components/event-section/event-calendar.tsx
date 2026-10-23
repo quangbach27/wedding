@@ -2,22 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import { useStore } from "../stores/store";
+import { useStore } from "../../stores/store";
 import MonthCalendar from "./calendar";
-
-const getVietnamDateParts = (date: Date) => {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Asia/Ho_Chi_Minh",
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  }).formatToParts(date);
-
-  const get = (type: string) =>
-    Number(parts.find((p) => p.type === type)?.value);
-
-  return { year: get("year"), month: get("month"), day: get("day") };
-};
+import { parseDatePart } from "@/lib/date";
 
 type EventCalendarProps = {
   className?: string;
@@ -25,7 +12,7 @@ type EventCalendarProps = {
 
 export default function EventCalendar({ className }: EventCalendarProps) {
   const { weddingDate, weddingLunarDate, weddingVenue } = useStore();
-  const { year, month, day } = getVietnamDateParts(weddingDate);
+  const { day, month, year } = parseDatePart(weddingDate);
   return (
     <div
       className={cn(
@@ -35,26 +22,26 @@ export default function EventCalendar({ className }: EventCalendarProps) {
     >
       <div className="flex items-end justify-center gap-4 md:gap-6">
         <div className="border-gold-light w-28 border-t-2 pt-3 text-center md:w-40">
-          <span className="text-ink/80 text-lg md:text-2xl">
-            Tháng {weddingDate.getMonth()}
-          </span>
+          <span className="text-ink/80 text-lg md:text-2xl">Tháng {month}</span>
         </div>
 
         <span className="text-gold font-serif text-7xl leading-[0.8] md:text-8xl">
-          {String(weddingDate.getDate()).padStart(2, "0")}
+          {day}
         </span>
 
         <div className="border-gold-light w-28 border-t-2 pt-3 text-center md:w-40">
-          <span className="text-ink/80 text-lg md:text-2xl">
-            Năm {weddingDate.getFullYear()}
-          </span>
+          <span className="text-ink/80 text-lg md:text-2xl">{year}</span>
         </div>
       </div>
       <p className="text-ink/60 mt-6 text-center text-sm md:text-base">
         (Nhằm {weddingLunarDate})
       </p>
 
-      <MonthCalendar year={year} month={month} highlightDay={day} />
+      <MonthCalendar
+        year={weddingDate.getFullYear()}
+        month={weddingDate.getMonth() + 1}
+        highlightDay={weddingDate.getDate()}
+      />
 
       {/* Venue */}
       <h3 className="text-ink mt-4 text-center text-base font-bold tracking-wide uppercase">
