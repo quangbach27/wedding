@@ -27,6 +27,17 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"], // only if you use icon/UI libraries like this
   },
+  headers: async () => [
+    {
+      source: "/:path*.mp3",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=31536000, immutable",
+        },
+      ],
+    },
+  ],
 };
 
 export default nextConfig;

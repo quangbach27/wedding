@@ -57,7 +57,7 @@ export default function PhotoCard({
 
       {caption && (
         <>
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-black/65 via-black/25 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-black/55 via-black/15 to-transparent" />
           <figcaption
             className={cn(
               "absolute inset-x-0 bottom-0 flex flex-col items-center px-4 pb-6 text-center",

@@ -22,7 +22,7 @@ export default function EventSection() {
           focus="50% 0%"
           caption={
             <>
-              <span className="text-gold-light text-xs font-semibold tracking-[0.35em] uppercase md:text-sm">
+              <span className="text-gold text-xs font-semibold tracking-[0.35em] uppercase md:text-sm">
                 Chú rể
               </span>
               <span className="font-script mt-1 text-3xl leading-tight text-white drop-shadow md:text-4xl">
@@ -35,14 +35,13 @@ export default function EventSection() {
           }
         />
         <PhotoCard
-          src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/bride.JPG"
+          src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/bride-2.JPG"
           alt="Ảnh Cô dâu"
           aspect="portrait"
           className="w-70 md:order-3 md:w-60"
-          focus="50% 0%"
           caption={
             <>
-              <span className="text-gold-light text-xs font-semibold tracking-[0.35em] uppercase md:text-sm">
+              <span className="text-gold text-xs font-semibold tracking-[0.35em] uppercase md:text-sm">
                 Cô dâu
               </span>
               <span className="font-script mt-1 text-3xl leading-tight text-white drop-shadow md:text-4xl">

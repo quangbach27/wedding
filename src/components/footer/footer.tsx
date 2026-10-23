@@ -7,7 +7,7 @@ export default function Footer() {
   const title = `${String(weddingDate.getDate()).padStart(2, "0")}.${weddingDate.getMonth()}.${weddingDate.getFullYear()}`;
 
   return (
-    <footer className="bg-cream/65 border-gold-light z-10 border text-xl">
+    <footer className="bg-cream/65 border-gold-light z-10 border-t text-xl">
       <Section>
         <SectionHeading
           eyebrow="Save the Date"
