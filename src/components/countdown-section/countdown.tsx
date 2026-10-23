@@ -144,11 +144,14 @@ function Unit({
 }
 
 /* Two gold dots between units, same height as the cards */
-function Colon() {
+function Colon({ className }: { className?: string }) {
   return (
     <span
       aria-hidden
-      className="flex h-12 flex-col justify-center gap-3 md:h-24"
+      className={cn(
+        "flex h-12 flex-col justify-center gap-3 md:h-24",
+        className,
+      )}
     >
       <i className="bg-gold-light h-1.5 w-1.5 rounded-full" />
       <i className="bg-gold-light h-1.5 w-1.5 rounded-full" />
@@ -185,7 +188,7 @@ export default function Countdown({ className }: Props) {
         <Unit value={p.hours} label="Giờ" />
         <Colon />
         <Unit value={p.minutes} label="Phút" />
-        <Colon />
+        <Colon className="hidden md:block" />
         <Unit value={p.seconds} label="Giây" className="hidden md:block" />
       </div>
 
