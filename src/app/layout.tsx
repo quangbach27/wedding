@@ -1,16 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Dancing_Script,
+  Cormorant_Garamond,
+  Quicksand,
+} from "next/font/google";
 import "./globals.css";
-import MusicPlayer from "@/components/music-player";
+import MusicPlayer from "@/components/music-player/music-player";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const dancing = Dancing_Script({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-dancing",
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+});
+const quicksand = Quicksand({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-quicksand",
 });
 
 export const metadata: Metadata = {
@@ -22,10 +31,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <>
       <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        lang="vi"
+        className={`${dancing.variable} ${cormorant.variable} ${quicksand.variable}`}
       >
-        <body className="min-h-full flex flex-col">{children}</body>
+        <body className="flex min-h-full flex-col">{children}</body>
       </html>
       <MusicPlayer />
     </>

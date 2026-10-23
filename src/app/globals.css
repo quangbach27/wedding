@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
+  --font-script: var(--font-dancing);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-quicksand);
+
   --color-gold-light: var(--gold-light);
   --color-gold: var(--gold);
   --color-lime: var(--lime);
   --color-green: var(--green);
   --color-mint: var(--mint);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
 }
 
 :root {
@@ -14,4 +20,78 @@
   --lime: #badc58;
   --green: #6ab04c;
   --mint: #b8e994;
+  --cream: #faf9f3;
+  --ink: #2f3d22;
+}
+
+.dark {
+  --gold: #ffff;
+  --ink: #ffff;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-quicksand), sans-serif;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift), 110vh, 0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  60%,
+  100% {
+    transform: translateX(300%) skewX(-20deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart {
+    animation: none !important;
+  }
+}
+
+@keyframes flip-top {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flip-bottom {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart {
+    animation: none !important;
+  }
+  .flip-top {
+    display: none;
+  }
+  .flip-bottom {
+    animation: none !important;
+  }
 }
