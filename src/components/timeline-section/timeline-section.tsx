@@ -7,9 +7,13 @@ const STEPS = [
   { time: "12:30", label: "Khai tiệc" },
 ];
 
-export default function TimelineSection() {
+export default function TimelineSection({
+  sectionClassName,
+}: {
+  sectionClassName?: string;
+}) {
   return (
-    <Section>
+    <Section className={sectionClassName}>
       <SectionHeading
         eyebrow="Chương trình đón khách"
         title="Thời gian đón khách"

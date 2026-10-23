@@ -1,5 +1,5 @@
 "use client";
-import { useStore } from "../stores/store";
+import { useStore } from "../../stores/store";
 import { Section, SectionHeading } from "../ui/section";
 
 export default function Footer() {

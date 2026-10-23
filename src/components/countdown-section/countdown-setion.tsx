@@ -1,8 +1,13 @@
 import Image from "next/image";
 import Countdown from "./countdown";
 import { Section, SectionHeading } from "../ui/section";
+import { cn } from "@/lib/utils";
 
-export default function CountdownSection() {
+export default function CountdownSection({
+  sectionClassName,
+}: {
+  sectionClassName?: string;
+}) {
   return (
     <div className="relative overflow-hidden px-6 py-20 text-center md:py-28">
       <Image
@@ -13,7 +18,7 @@ export default function CountdownSection() {
         className="object-cover"
       />
 
-      <Section className="relative">
+      <Section className={cn("relative", sectionClassName)}>
         <SectionHeading
           className="dark"
           eyebrow="COUNTDOWN"

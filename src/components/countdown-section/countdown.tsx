@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { useStore } from "../stores/store";
+import { useStore } from "../../stores/store";
 
 type Props = {
   className?: string;
@@ -117,12 +117,20 @@ function Digit({ value }: { value: string }) {
   );
 }
 
-function Unit({ value, label }: { value: number; label: string }) {
+function Unit({
+  value,
+  label,
+  className,
+}: {
+  value: number;
+  label: string;
+  className?: string;
+}) {
   // Two digits by default, more if the number is larger (e.g. 100 days)
   const digits = String(value).padStart(2, "0").split("");
 
   return (
-    <div className="flex flex-col items-center">
+    <div className={cn("flex flex-col items-center", className)}>
       <div aria-hidden className="flex gap-1 md:gap-1.5">
         {digits.map((d, i) => (
           <Digit key={i} value={d} />
@@ -140,7 +148,7 @@ function Colon() {
   return (
     <span
       aria-hidden
-      className="hidden h-24 flex-col justify-center gap-3 md:flex"
+      className="flex h-12 flex-col justify-center gap-3 md:h-24"
     >
       <i className="bg-gold-light h-1.5 w-1.5 rounded-full" />
       <i className="bg-gold-light h-1.5 w-1.5 rounded-full" />
@@ -171,14 +179,14 @@ export default function Countdown({ className }: Props) {
         Còn {p.days} ngày {p.hours} giờ {p.minutes} phút {p.seconds} giây
       </p>
 
-      <div className="flex items-start justify-center gap-2 md:gap-5">
+      <div className="flex items-start justify-center gap-3 md:gap-5">
         <Unit value={p.days} label="Ngày" />
         <Colon />
         <Unit value={p.hours} label="Giờ" />
         <Colon />
         <Unit value={p.minutes} label="Phút" />
         <Colon />
-        <Unit value={p.seconds} label="Giây" />
+        <Unit value={p.seconds} label="Giây" className="hidden md:block" />
       </div>
 
       {p.finished && (

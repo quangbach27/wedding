@@ -1,5 +1,6 @@
 import Header from "@/components/header/header";
-import { isSide, StoreProvider, stores } from "@/components/stores/store";
+import ScrollReveal from "@/components/ui/scroll-reveal";
+import { StoreProvider } from "@/stores/store";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -32,6 +33,7 @@ export default function SideLayout({
 }: LayoutProps<"/[side]">) {
   return (
     <Suspense fallback={null}>
+      <ScrollReveal />
       <SideStore params={params}>{children}</SideStore>
     </Suspense>
   );

@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Heart } from "lucide-react";
-import { useStore } from "../stores/store";
+import { useStore } from "../../stores/store";
 
 type NameParts = {
   fullName: string;
@@ -40,7 +40,7 @@ function FamilyBlock({ family }: { family: Family }) {
   );
 }
 
-export default function InvitationCard({  className }: Props) {
+export default function InvitationCard({ className }: Props) {
   const { groom, bride, isDisplayHolyName } = useStore();
 
   return (
@@ -109,7 +109,7 @@ export default function InvitationCard({  className }: Props) {
             Trân trọng báo tin lễ thành hôn
           </p>
 
-          <h2 className="font-script text-ink text-5xl leading-tight md:text-7xl">
+          <h2 className="font-script text-ink text-3xl leading-tight md:text-6xl">
             {generateName({
               fullName: groom.fullName,
               holyName: groom.holyName,
@@ -121,7 +121,7 @@ export default function InvitationCard({  className }: Props) {
             &amp;
           </span>
 
-          <h2 className="font-script text-ink text-5xl leading-tight md:text-7xl">
+          <h2 className="font-script text-ink text-3xl leading-tight md:text-6xl">
             {generateName({
               fullName: bride.fullName,
               holyName: bride.holyName,

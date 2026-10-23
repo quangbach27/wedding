@@ -13,12 +13,12 @@ export default function Home() {
     <main className="relative">
       <Background />
       <HeroSection />
-      <EventSection />
-      <InvitationSection />
-      <TimelineSection />
-      <RsvpSection />
-      <CountdownSection />
-      <GuestBookSection />
+      <EventSection sectionClassName="reveal reveal-left" />
+      <InvitationSection sectionClassName="reveal reveal-right" />
+      <TimelineSection sectionClassName="reveal reveal-left" />
+      <RsvpSection sectionClassName="reveal reveal-right" />
+      <CountdownSection sectionClassName="reveal reveal-left" />
+      <GuestBookSection sectionClassName="reveal reveal-right" />
       <Footer />
     </main>
   );

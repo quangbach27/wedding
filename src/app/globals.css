@@ -33,6 +33,7 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-quicksand), sans-serif;
+  overflow-x: clip;
 }
 
 @keyframes fall {
@@ -94,4 +95,30 @@ body {
   .flip-bottom {
     animation: none !important;
   }
+}
+
+/* Base hidden class */
+.reveal {
+  opacity: 0;
+  transform: translateX(var(--from-x, 0)) translateY(var(--from-y, 0));
+  will-change: opacity, transform;
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Offsets */
+.reveal-left {
+  --from-x: -88px;
+}
+
+.reveal-right {
+  --from-x: 88px;
+}
+
+/* Revealed state */
+.reveal-visible {
+  opacity: 1;
+  --from-x: 0px;
+  --from-y: 0px;
 }

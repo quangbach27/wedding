@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "../stores/store";
+import { useStore } from "../../stores/store";
 
 export default function CoupleName() {
   const { groom, bride } = useStore();

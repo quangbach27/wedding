@@ -1,14 +1,24 @@
+"use client";
+import { useStore } from "@/stores/store";
 import PhotoCard from "../ui/photo-card";
 import { Section, SectionHeading } from "../ui/section";
 import EventCalendar from "./event-calendar";
+import { parseDatePart } from "@/lib/date";
 
-export default function EventSection() {
+export default function EventSection({
+  sectionClassName,
+}: {
+  sectionClassName?: string;
+}) {
+  const { weddingDate } = useStore();
+  const { time, weekday } = parseDatePart(weddingDate);
+
   return (
-    <Section>
+    <Section className={sectionClassName}>
       <SectionHeading
         eyebrow="Ngày trọng đại"
         title="Thân mời quý khách đến dự lễ Thành hôn"
-        subtitle="Được tổ chức vào lúc 11:00, Chủ Nhật"
+        subtitle={`Được tổ chức vào lúc ${time}, ${weekday}`}
       />
 
       <div className="flex flex-col items-center gap-5 md:flex-row">
@@ -39,6 +49,7 @@ export default function EventSection() {
           alt="Ảnh Cô dâu"
           aspect="portrait"
           className="w-70 md:order-3 md:w-60"
+          zoom={1.2}
           caption={
             <>
               <span className="text-gold text-xs font-semibold tracking-[0.35em] uppercase md:text-sm">
