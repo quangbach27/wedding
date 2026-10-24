@@ -10,16 +10,19 @@ import MusicPlayer from "@/components/music-player/music-player";
 const dancing = Dancing_Script({
   subsets: ["latin", "vietnamese"],
   variable: "--font-dancing",
+  preload: false,
 });
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
+  preload: false,
 });
 const quicksand = Quicksand({
   subsets: ["latin", "vietnamese"],
   variable: "--font-quicksand",
+  preload: false,
 });
 
 export const metadata: Metadata = {

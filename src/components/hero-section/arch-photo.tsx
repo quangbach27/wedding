@@ -4,11 +4,10 @@ import { cn } from "@/lib/utils";
 type Props = {
   src: string;
   alt: string;
-  preload?: boolean;
   className?: string;
 };
 
-export default function ArchPhoto({ src, alt, preload, className }: Props) {
+export default function ArchPhoto({ src, alt, className }: Props) {
   return (
     <div className={cn("relative aspect-3/4 w-70 md:w-md", className)}>
       <div
@@ -21,7 +20,8 @@ export default function ArchPhoto({ src, alt, preload, className }: Props) {
           src={src}
           alt={alt}
           fill
-          preload={preload}
+          loading="eager"
+          fetchPriority="high"
           sizes="(min-width: 768px) 448px, 280px"
           className="object-cover object-top"
         />

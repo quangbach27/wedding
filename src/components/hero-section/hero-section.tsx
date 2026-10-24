@@ -21,7 +21,6 @@ export default function HeroSection({
       <ArchPhoto
         src="/hero.webp"
         alt="Quang Bách và Hồng Vân"
-        preload
         className="order-1 mx-auto md:order-2"
       />
 
