@@ -6,11 +6,7 @@ import { SectionHeading } from "../ui/section-heading";
 import EventCalendar from "./event-calendar";
 import { parseDatePart } from "@/lib/date";
 
-export default function EventSection({
-  reveal,
-}: {
-  reveal?: SectionReveal;
-}) {
+export default function EventSection({ reveal }: { reveal?: SectionReveal }) {
   const { weddingDate } = useStore();
   const { time, weekday } = parseDatePart(weddingDate);
 
@@ -25,10 +21,10 @@ export default function EventSection({
       <div className="flex flex-col items-center gap-5 md:flex-row">
         <EventCalendar className="md:order-2" />
         <PhotoCard
-          src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/groom.JPG"
+          src="/groom.webp"
           alt="Ảnh Chú Rể"
           aspect="portrait"
-          className="w-full max-w-70 md:order-1 md:w-60"
+          className="max-w-70 md:order-1"
           zoom={1}
           focus="50% 0%"
           caption={
@@ -46,10 +42,10 @@ export default function EventSection({
           }
         />
         <PhotoCard
-          src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/bride-2.JPG"
+          src="/bride.webp"
           alt="Ảnh Cô dâu"
           aspect="portrait"
-          className="w-full max-w-70 md:order-3 md:w-60"
+          className="w-full max-w-70 md:order-3"
           zoom={1.2}
           caption={
             <>

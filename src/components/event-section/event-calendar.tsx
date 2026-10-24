@@ -33,7 +33,7 @@ export default function EventCalendar({ className }: EventCalendarProps) {
           <span className="text-ink/80 text-lg md:text-2xl">{year}</span>
         </div>
       </div>
-      <p className="text-ink/60 my-3  text-center text-sm md:text-base">
+      <p className="text-ink/60 my-3 text-center text-sm md:text-base">
         (Nhằm {weddingLunarDate})
       </p>
 
@@ -52,7 +52,7 @@ export default function EventCalendar({ className }: EventCalendarProps) {
         <iframe
           title="Bản đồ địa điểm"
           src={weddingVenue.mapSrc}
-          className="h-60 w-full md:h-70"
+          className="h-50 w-full md:h-60"
           allowFullScreen
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"

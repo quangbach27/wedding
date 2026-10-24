@@ -19,9 +19,9 @@ export default function HeroSection({
     >
       {/* Photo: first on mobile */}
       <ArchPhoto
-        src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/hero.jpg"
+        src="/hero.webp"
         alt="Quang Bách và Hồng Vân"
-        priority
+        preload
         className="order-1 mx-auto md:order-2"
       />
 
@@ -29,10 +29,9 @@ export default function HeroSection({
       <div className="order-2 text-center md:order-1 md:text-left">
         <WeddingDate />
         <Typewriter
-          text="Celebrating khoảnh khắc đặc biệt nhất của chúng tôi"
+          text="Đánh dấu cột mốc hạnh phúc của chúng tôi"
           className="text-ink/70 mx-auto mt-2 max-w-xs text-base italic md:mx-0 md:max-w-sm md:text-lg"
         />
-
         <CoupleName />
       </div>
 

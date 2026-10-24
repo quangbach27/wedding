@@ -12,9 +12,7 @@ export default function MusicPlayer() {
     if (!audio) return;
 
     const attemptPlayback = () => {
-      if (audio.readyState < HTMLMediaElement.HAVE_FUTURE_DATA || !audio.paused) {
-        return;
-      }
+      if (!audio.paused) return;
 
       audio.play().catch((err: unknown) => {
         if (
@@ -44,7 +42,9 @@ export default function MusicPlayer() {
     audio.addEventListener("canplay", attemptPlayback);
     audio.addEventListener("play", removeInteractionListeners, { once: true });
     window.addEventListener("pointerdown", handleUserInteraction);
-    window.addEventListener("touchstart", handleUserInteraction, { passive: true });
+    window.addEventListener("touchstart", handleUserInteraction, {
+      passive: true,
+    });
     window.addEventListener("wheel", handleUserInteraction, { passive: true });
     window.addEventListener("scroll", handleUserInteraction, { passive: true });
     window.addEventListener("keydown", handleUserInteraction);
@@ -82,14 +82,14 @@ export default function MusicPlayer() {
         ref={audioRef}
         src="/beautiful-in-white.mp3"
         loop
-        preload="auto"
+        preload="none"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />
       <button
         onClick={handlePlaying}
         aria-label={playing ? "Mute music" : "Play music"}
-        className="border-gold text-gold fixed right-[20] bottom-[20] flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border backdrop-blur-md transition-transform hover:scale-105"
+        className="border-gold text-gold fixed right-[20] bottom-[20] z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border backdrop-blur-md transition-transform hover:scale-105"
       >
         {playing ? <Volume2 size={22} /> : <VolumeX size={22} />}
       </button>
