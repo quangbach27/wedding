@@ -97,28 +97,48 @@ body {
   }
 }
 
-/* Base hidden class */
+/* Hidden state */
 .reveal {
+  --reveal-distance: 28px; /* mobile */
   opacity: 0;
-  transform: translateX(var(--from-x, 0)) translateY(var(--from-y, 0));
+  transform: translate3d(var(--from-x, 0), var(--from-y, 0), 0);
   will-change: opacity, transform;
   transition:
-    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--delay, 0s),
+    transform 1.3s cubic-bezier(0.22, 0.61, 0.36, 1) var(--delay, 0s);
 }
 
-/* Offsets */
+@media (min-width: 768px) {
+  .reveal {
+    --reveal-distance: 56px; /* desktop */
+  }
+}
+
+/* Direction */
 .reveal-left {
-  --from-x: -88px;
+  --from-x: calc(var(--reveal-distance) * -1);
 }
 
 .reveal-right {
-  --from-x: 88px;
+  --from-x: var(--reveal-distance);
+}
+
+.reveal-up {
+  --from-y: var(--reveal-distance);
 }
 
 /* Revealed state */
-.reveal-visible {
+.reveal.reveal-visible {
   opacity: 1;
-  --from-x: 0px;
-  --from-y: 0px;
+  /* "none" avoids leaving a transform on the element, which would break
+     position: fixed / sticky children inside the section */
+  transform: none;
+}
+
+/* Reduced motion: no movement, simple fade */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
 }
