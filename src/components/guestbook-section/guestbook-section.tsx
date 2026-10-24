@@ -1,14 +1,14 @@
-import { Section } from "../ui/section";
+import { Section, type SectionReveal } from "../ui/section";
 import { SectionHeading } from "../ui/section-heading";
 import GuestbookForm from "./guestbook-form";
 
 export default function GuestBookSection({
-  sectionClassName,
+  reveal,
 }: {
-  sectionClassName?: string;
+  reveal?: SectionReveal;
 }) {
   return (
-    <Section className={sectionClassName}>
+    <Section reveal={reveal}>
       <SectionHeading eyebrow="Sổ lưu bút" title="Gửi lời chúc phúc" />
       <GuestbookForm className="mx-auto max-w-3xl" />
     </Section>

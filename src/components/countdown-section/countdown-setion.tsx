@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Countdown from "./countdown";
-import { Section } from "../ui/section";
+import { Section, type SectionReveal } from "../ui/section";
 import { SectionHeading } from "../ui/section-heading";
-import { cn } from "@/lib/utils";
 
 export default function CountdownSection({
-  sectionClassName,
+  reveal,
 }: {
-  sectionClassName?: string;
+  reveal?: SectionReveal;
 }) {
   return (
     <div className="relative overflow-hidden px-6 py-20 text-center md:py-28">
@@ -19,7 +18,7 @@ export default function CountdownSection({
         className="object-cover"
       />
 
-      <Section className={cn("relative", sectionClassName)}>
+      <Section className="relative" reveal={reveal}>
         <SectionHeading
           className="dark"
           eyebrow="COUNTDOWN"

@@ -3,19 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
+export type SectionReveal = "left" | "right";
+
 type SectionProps = {
   className?: string;
+  reveal?: SectionReveal;
   children: React.ReactNode;
 };
 
-export function Section({ className, children }: SectionProps) {
+export function Section({ className, reveal, children }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const hasRevealClass = className?.split(/\s+/).includes("reveal");
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || !hasRevealClass) return;
+    if (!section || !reveal) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -30,7 +32,7 @@ export function Section({ className, children }: SectionProps) {
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, [hasRevealClass]);
+  }, [reveal]);
 
   return (
     <section
@@ -38,6 +40,8 @@ export function Section({ className, children }: SectionProps) {
       className={cn(
         "mx-auto w-full max-w-6xl px-6 py-10 md:py-14",
         className,
+        reveal && "reveal",
+        reveal && `reveal-${reveal}`,
         isVisible && "reveal-visible",
       )}
     >

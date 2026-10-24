@@ -1,21 +1,21 @@
 "use client";
 import { useStore } from "@/stores/store";
 import PhotoCard from "../ui/photo-card";
-import { Section } from "../ui/section";
+import { Section, type SectionReveal } from "../ui/section";
 import { SectionHeading } from "../ui/section-heading";
 import EventCalendar from "./event-calendar";
 import { parseDatePart } from "@/lib/date";
 
 export default function EventSection({
-  sectionClassName,
+  reveal,
 }: {
-  sectionClassName?: string;
+  reveal?: SectionReveal;
 }) {
   const { weddingDate } = useStore();
   const { time, weekday } = parseDatePart(weddingDate);
 
   return (
-    <Section className={sectionClassName}>
+    <Section reveal={reveal}>
       <SectionHeading
         eyebrow="Ngày trọng đại"
         title="Thân mời quý khách đến dự lễ Thành hôn"

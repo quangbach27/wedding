@@ -29,14 +29,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <>
-      <html
-        lang="vi"
-        className={`${dancing.variable} ${cormorant.variable} ${quicksand.variable}`}
-      >
-        <body className="flex min-h-full flex-col">{children}</body>
-      </html>
-      <MusicPlayer />
-    </>
+    <html
+      lang="vi"
+      className={`${dancing.variable} ${cormorant.variable} ${quicksand.variable}`}
+    >
+      <body className="flex min-h-full flex-col">
+        <MusicPlayer />
+        {children}
+      </body>
+    </html>
   );
 }

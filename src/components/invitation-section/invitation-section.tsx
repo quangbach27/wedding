@@ -1,14 +1,14 @@
-import { Section } from "../ui/section";
+import { Section, type SectionReveal } from "../ui/section";
 import { SectionHeading } from "../ui/section-heading";
 import InvitationCard from "./invitation-card";
 
 export default function InvitationSection({
-  sectionClassName,
+  reveal,
 }: {
-  sectionClassName?: string;
+  reveal?: SectionReveal;
 }) {
   return (
-    <Section className={sectionClassName}>
+    <Section reveal={reveal}>
       <SectionHeading eyebrow="Gia đình hai bên" title="Thư mời" />
       <InvitationCard />
     </Section>

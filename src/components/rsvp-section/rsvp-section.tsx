@@ -1,14 +1,14 @@
-import { Section } from "../ui/section";
+import { Section, type SectionReveal } from "../ui/section";
 import { SectionHeading } from "../ui/section-heading";
 import RsvpForm from "./rsvp-form";
 
 export default function RsvpSection({
-  sectionClassName,
+  reveal,
 }: {
-  sectionClassName?: string;
+  reveal?: SectionReveal;
 }) {
   return (
-    <Section className={sectionClassName}>
+    <Section reveal={reveal}>
       <SectionHeading eyebrow="Phản hồi lời mời" title="Xác nhận tham dự" />
       <RsvpForm className="mx-auto max-w-3xl" />
     </Section>

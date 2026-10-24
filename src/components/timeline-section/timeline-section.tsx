@@ -1,4 +1,4 @@
-import { Section } from "../ui/section";
+import { Section, type SectionReveal } from "../ui/section";
 import { SectionHeading } from "../ui/section-heading";
 import Timeline from "./timeline";
 
@@ -9,12 +9,12 @@ const STEPS = [
 ];
 
 export default function TimelineSection({
-  sectionClassName,
+  reveal,
 }: {
-  sectionClassName?: string;
+  reveal?: SectionReveal;
 }) {
   return (
-    <Section className={sectionClassName}>
+    <Section reveal={reveal}>
       <SectionHeading
         eyebrow="Chương trình đón khách"
         title="Thời gian đón khách"
