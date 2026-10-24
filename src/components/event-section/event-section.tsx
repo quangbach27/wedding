@@ -1,7 +1,8 @@
 "use client";
 import { useStore } from "@/stores/store";
 import PhotoCard from "../ui/photo-card";
-import { Section, SectionHeading } from "../ui/section";
+import { Section } from "../ui/section";
+import { SectionHeading } from "../ui/section-heading";
 import EventCalendar from "./event-calendar";
 import { parseDatePart } from "@/lib/date";
 
@@ -27,7 +28,7 @@ export default function EventSection({
           src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/groom.JPG"
           alt="Ảnh Chú Rể"
           aspect="portrait"
-          className="w-70 md:order-1 md:w-60"
+          className="w-full max-w-70 md:order-1 md:w-60"
           zoom={1}
           focus="50% 0%"
           caption={
@@ -48,7 +49,7 @@ export default function EventSection({
           src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/bride-2.JPG"
           alt="Ảnh Cô dâu"
           aspect="portrait"
-          className="w-70 md:order-3 md:w-60"
+          className="w-full max-w-70 md:order-3 md:w-60"
           zoom={1.2}
           caption={
             <>

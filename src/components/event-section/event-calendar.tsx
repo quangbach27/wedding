@@ -16,12 +16,12 @@ export default function EventCalendar({ className }: EventCalendarProps) {
   return (
     <div
       className={cn(
-        "border-gold-light z-10 max-w-130 rounded-lg border px-5 py-5 md:px-12 md:py-11",
+        "border-gold-light z-10 mx-auto max-w-130 rounded-lg border bg-white/70 px-5 py-5 md:px-12 md:py-11",
         className,
       )}
     >
-      <div className="flex items-end justify-center gap-4 md:gap-6">
-        <div className="border-gold-light w-28 border-t-2 pt-3 text-center md:w-40">
+      <div className="flex w-full min-w-0 items-end justify-center gap-2 md:gap-6">
+        <div className="border-gold-light min-w-0 flex-1 border-t-2 pt-3 text-center md:w-40 md:flex-none">
           <span className="text-ink/80 text-lg md:text-2xl">Tháng {month}</span>
         </div>
 
@@ -29,11 +29,11 @@ export default function EventCalendar({ className }: EventCalendarProps) {
           {day}
         </span>
 
-        <div className="border-gold-light w-28 border-t-2 pt-3 text-center md:w-40">
+        <div className="border-gold-light min-w-0 flex-1 border-t-2 pt-3 text-center md:w-40 md:flex-none">
           <span className="text-ink/80 text-lg md:text-2xl">{year}</span>
         </div>
       </div>
-      <p className="text-ink/60 mt-6 text-center text-sm md:text-base">
+      <p className="text-ink/60 my-3  text-center text-sm md:text-base">
         (Nhằm {weddingLunarDate})
       </p>
 

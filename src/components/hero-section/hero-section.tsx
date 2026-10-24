@@ -1,12 +1,22 @@
+import { cn } from "@/lib/utils";
 import { Section } from "../ui/section";
 import WeddingDate from "../ui/wedding-date";
 import ArchPhoto from "./arch-photo";
 import CoupleName from "./couple-name";
 import Typewriter from "./type-writter";
 
-export default function HeroSection() {
+export default function HeroSection({
+  sectionClassName,
+}: {
+  sectionClassName?: string;
+}) {
   return (
-    <Section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-12 md:grid-cols-[1fr_auto_1fr] md:gap-12 md:py-20">
+    <Section
+      className={cn(
+        "mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-12 md:grid-cols-[1fr_auto_1fr] md:gap-12 md:py-20",
+        sectionClassName,
+      )}
+    >
       {/* Photo: first on mobile */}
       <ArchPhoto
         src="https://bach-van-wedding.s3.ap-southeast-2.amazonaws.com/hero.jpg"
@@ -20,7 +30,7 @@ export default function HeroSection() {
         <WeddingDate />
         <Typewriter
           text="Celebrating khoảnh khắc đặc biệt nhất của chúng tôi"
-          className="text-ink/70 mx-auto mt-2 max-w-xs text-base text-balance italic md:mx-0 md:max-w-sm md:text-lg"
+          className="text-ink/70 mx-auto mt-2 max-w-xs text-base italic md:mx-0 md:max-w-sm md:text-lg"
         />
 
         <CoupleName />

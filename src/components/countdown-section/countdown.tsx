@@ -188,7 +188,7 @@ export default function Countdown({ className }: Props) {
         <Unit value={p.hours} label="Giờ" />
         <Colon />
         <Unit value={p.minutes} label="Phút" />
-        <Colon className="hidden md:block" />
+        <Colon className="hidden md:flex" />
         <Unit value={p.seconds} label="Giây" className="hidden md:block" />
       </div>
 

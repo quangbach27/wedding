@@ -1,7 +1,8 @@
 "use client";
 import { parseDatePart } from "@/lib/date";
 import { useStore } from "../../stores/store";
-import { Section, SectionHeading } from "../ui/section";
+import { Section } from "../ui/section";
+import { SectionHeading } from "../ui/section-heading";
 
 export default function Footer() {
   const { weddingDate } = useStore();

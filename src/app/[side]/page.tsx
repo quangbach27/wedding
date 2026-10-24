@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <main className="relative">
       <Background />
-      <HeroSection />
+      <HeroSection sectionClassName="min-h-svh" />
       <EventSection sectionClassName="reveal reveal-left" />
       <InvitationSection sectionClassName="reveal reveal-right" />
       <TimelineSection sectionClassName="reveal reveal-left" />

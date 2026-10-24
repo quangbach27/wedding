@@ -1,4 +1,5 @@
-import { Section, SectionHeading } from "../ui/section";
+import { Section } from "../ui/section";
+import { SectionHeading } from "../ui/section-heading";
 import GuestbookForm from "./guestbook-form";
 
 export default function GuestBookSection({

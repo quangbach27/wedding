@@ -1,4 +1,5 @@
-import { Section, SectionHeading } from "../ui/section";
+import { Section } from "../ui/section";
+import { SectionHeading } from "../ui/section-heading";
 import RsvpForm from "./rsvp-form";
 
 export default function RsvpSection({

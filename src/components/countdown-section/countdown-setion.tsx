@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Countdown from "./countdown";
-import { Section, SectionHeading } from "../ui/section";
+import { Section } from "../ui/section";
+import { SectionHeading } from "../ui/section-heading";
 import { cn } from "@/lib/utils";
 
 export default function CountdownSection({

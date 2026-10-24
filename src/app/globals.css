@@ -36,6 +36,10 @@ body {
   overflow-x: clip;
 }
 
+html {
+  overflow-x: clip;
+}
+
 @keyframes fall {
   0% {
     transform: translate3d(0, -10vh, 0) rotate(0deg);
@@ -138,6 +142,7 @@ body {
 /* Reduced motion: no movement, simple fade */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
+    opacity: 1;
     transform: none;
     transition: opacity 0.4s ease;
   }

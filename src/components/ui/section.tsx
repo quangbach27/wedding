@@ -1,40 +1,7 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-
-type SectionHeadingProps = {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-  className?: string;
-};
-
-export function SectionHeading({
-  eyebrow,
-  title,
-  subtitle,
-  className,
-}: SectionHeadingProps) {
-  return (
-    <div
-      className={cn("mb-12 flex flex-col items-center text-center", className)}
-    >
-      {eyebrow && (
-        <span className="text-gold text-xs font-bold tracking-[0.4em] uppercase md:text-sm">
-          {eyebrow}
-        </span>
-      )}
-
-      <h2 className="text-ink mt-5 font-serif text-4xl leading-tight font-medium italic md:text-5xl">
-        {title}
-      </h2>
-
-      {subtitle && (
-        <p className="text-ink/70 mt-6 text-xs font-semibold tracking-[0.25em] uppercase md:text-base">
-          {subtitle}
-        </p>
-      )}
-    </div>
-  );
-}
 
 type SectionProps = {
   className?: string;
@@ -42,9 +9,37 @@ type SectionProps = {
 };
 
 export function Section({ className, children }: SectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const hasRevealClass = className?.split(/\s+/).includes("reveal");
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || !hasRevealClass) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsVisible(true);
+        observer.disconnect();
+      },
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [hasRevealClass]);
+
   return (
     <section
-      className={cn("mx-auto w-full max-w-6xl px-6 py-10 md:py-14", className)}
+      ref={sectionRef}
+      className={cn(
+        "mx-auto w-full max-w-6xl px-6 py-10 md:py-14",
+        className,
+        isVisible && "reveal-visible",
+      )}
     >
       {children}
     </section>
