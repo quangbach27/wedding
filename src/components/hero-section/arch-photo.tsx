@@ -20,8 +20,7 @@ export default function ArchPhoto({ src, alt, className }: Props) {
           src={src}
           alt={alt}
           fill
-          loading="eager"
-          fetchPriority="high"
+          priority
           sizes="(min-width: 768px) 448px, 280px"
           className="object-cover object-top"
         />

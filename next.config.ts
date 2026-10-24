@@ -15,29 +15,41 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    minimumCacheTTL: 60 * 60 * 24 * 30,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "bach-van-wedding.s3.ap-southeast-2.amazonaws.com",
-        pathname: "/**",
-      },
-    ],
+    // Fewer sizes means fewer variants to generate and cache
+    deviceSizes: [480, 768, 1080, 1920],
+    imageSizes: [128, 256, 400, 640],
+    // Optimized images stay cached for 1 year, so the optimizer isn't re-run
+    minimumCacheTTL: 31536000,
+    // Next 16 only allows the qualities listed here (default is just [75])
+    qualities: [60, 70, 75],
   },
   experimental: {
     optimizePackageImports: ["lucide-react"], // only if you use icon/UI libraries like this
   },
-  headers: async () => [
-    {
-      source: "/:path*.mp3",
-      headers: [
-        {
-          key: "Cache-Control",
-          value: "public, max-age=31536000, immutable",
-        },
-      ],
-    },
-  ],
+  async headers() {
+    return [
+      {
+        // Images in /public: cache a day, revalidate in the background
+        source: "/:all*(webp|avif|png|jpg|jpeg|svg|ico)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
+      {
+        // Audio: cache for a year
+        source: "/:all*(mp3)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

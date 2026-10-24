@@ -1,20 +1,34 @@
-import { Suspense } from "react";
-import { connection } from "next/server";
-import CountdownSection from "@/components/countdown-section/countdown-setion";
-import EventSection from "@/components/event-section/event-section";
-import Footer from "@/components/footer/footer";
-import GuestBookSection from "@/components/guestbook-section/guestbook-section";
+import dynamic from "next/dynamic";
+
 import HeroSection from "@/components/hero-section/hero-section";
-import InvitationSection from "@/components/invitation-section/invitation-section";
-import RsvpSection from "@/components/rsvp-section/rsvp-section";
-import TimelineSection from "@/components/timeline-section/timeline-section";
 import Background from "@/components/ui/background";
 
-async function StreamingSections() {
-  await connection();
+const TimelineSection = dynamic(
+  () => import("@/components/timeline-section/timeline-section"),
+);
 
+const InvitationSection = dynamic(
+  () => import("@/components/invitation-section/invitation-section"),
+);
+const EventSection = dynamic(
+  () => import("@/components/event-section/event-section"),
+);
+const RsvpSection = dynamic(
+  () => import("@/components/rsvp-section/rsvp-section"),
+);
+const CountdownSection = dynamic(
+  () => import("@/components/countdown-section/countdown-section"),
+);
+const GuestBookSection = dynamic(
+  () => import("@/components/guestbook-section/guestbook-section"),
+);
+const Footer = dynamic(() => import("@/components/footer/footer"));
+
+export default function Home() {
   return (
-    <>
+    <main className="relative">
+      <Background />
+      <HeroSection sectionClassName="min-h-svh" />
       <EventSection reveal="left" />
       <InvitationSection reveal="right" />
       <TimelineSection reveal="left" />
@@ -22,18 +36,6 @@ async function StreamingSections() {
       <CountdownSection reveal="left" />
       <GuestBookSection reveal="right" />
       <Footer />
-    </>
-  );
-}
-
-export default function Home() {
-  return (
-    <main className="relative">
-      <Background />
-      <HeroSection sectionClassName="min-h-svh" />
-      <Suspense fallback={<div aria-hidden className="min-h-[40vh]" />}>
-        <StreamingSections />
-      </Suspense>
     </main>
   );
 }
