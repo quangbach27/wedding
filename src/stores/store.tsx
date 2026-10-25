@@ -28,12 +28,17 @@ export type StoreType = {
   bride: Family;
   weddingVenue: Venue;
   isDisplayHolyName: boolean;
+  side: "groom" | "bride";
 };
 
 // Fields that differ per side
 type SideConfig = Pick<
   StoreType,
-  "weddingVenue" | "weddingDate" | "weddingLunarDate" | "isDisplayHolyName"
+  | "weddingVenue"
+  | "weddingDate"
+  | "weddingLunarDate"
+  | "isDisplayHolyName"
+  | "side"
 >;
 
 const baseStore: Omit<StoreType, keyof SideConfig> = {
@@ -83,12 +88,14 @@ export const stores = {
     weddingDate: new Date("2026-12-06T11:00:00+07:00"),
     weddingLunarDate: "ngày 28 tháng 10 năm Bính Ngọ",
     isDisplayHolyName: false,
+    side: "groom",
   }),
   bride: createStore({
     weddingVenue: tanQuanChurchVenue,
     weddingDate: new Date("2026-11-29T11:00:00+07:00"),
     weddingLunarDate: "ngày 21 tháng 10 năm Bính Ngọ",
     isDisplayHolyName: true,
+    side: "bride",
   }),
 } as const;
 
