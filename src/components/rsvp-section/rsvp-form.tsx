@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { CalendarPlus, Check, Heart, Pencil, Users } from "lucide-react";
 import {
   startTransition,
   useActionState,
@@ -24,7 +24,7 @@ const clamp = (n: number) =>
 
 export default function RsvpForm({ className }: { className?: string }) {
   const [state, formAction, pending] = useActionState(createRsvp, {});
-  const { side } = useStore();
+  const { side, weddingDate } = useStore();
   const storageKey = `rsvp:${side}`;
 
   const [choice, setChoice] = useState<"yes" | "no" | null>(null);
@@ -109,46 +109,120 @@ export default function RsvpForm({ className }: { className?: string }) {
     return <div aria-hidden className={cardClass} style={{ minHeight: 260 }} />;
   }
 
-  /* ---------- Success ---------- */
   if (confirmed) {
     const attending = submitted?.attending !== "no";
+
+    const fmt = (o: Intl.DateTimeFormatOptions) =>
+      weddingDate.toLocaleString("vi-VN", {
+        timeZone: "Asia/Ho_Chi_Minh",
+        ...o,
+      });
+
+    const dateText = fmt({
+      weekday: "long",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+    const timeText = fmt({ hour: "2-digit", minute: "2-digit" });
+
+    // Link Google Calendar (sự kiện kéo dài 3 giờ)
+    const stamp = (d: Date) => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
+    const calendarUrl = weddingDate
+      ? "https://calendar.google.com/calendar/render?" +
+        new URLSearchParams({
+          action: "TEMPLATE",
+          text: "Đám cưới Quang Bách & Hồng Vân",
+          dates: `${stamp(weddingDate)}/${stamp(new Date(weddingDate.getTime() + 3 * 3600_000))}`,
+        })
+      : null;
 
     return (
       <div
         role="status"
         className={cn(
           cardClass,
-          "text-ink flex flex-col items-center gap-4 py-10 text-center md:py-12",
+          "text-ink flex flex-col items-center gap-5 overflow-hidden py-10 text-center md:py-12",
+          "bg-[radial-gradient(ellipse_at_top,rgba(98,168,70,0.14),transparent_60%)]",
           "transition duration-500 starting:translate-y-2 starting:opacity-0",
         )}
       >
-        <span className="bg-green flex h-16 w-16 items-center justify-center rounded-full text-white shadow-lg">
-          <Check size={32} strokeWidth={3} />
+        {/* Badge */}
+        <span className="relative flex h-16 w-16 items-center justify-center">
+          <span
+            aria-hidden
+            className="bg-green/30 absolute inset-0 animate-ping rounded-full [animation-iteration-count:2] motion-reduce:hidden"
+          />
+          <span
+            className={cn(
+              "relative flex h-16 w-16 items-center justify-center rounded-full text-white shadow-lg",
+              attending ? "bg-green" : "bg-gold",
+            )}
+          >
+            {attending ? (
+              <Check size={32} strokeWidth={3} />
+            ) : (
+              <Heart size={30} fill="currentColor" />
+            )}
+          </span>
         </span>
 
-        <h3 className="font-(family-name:--font-dancing) text-3xl md:text-4xl">
-          {submitted?.name ? `Cảm ơn ${submitted.name}!` : "Cảm ơn bạn!"}
-        </h3>
+        <div className="space-y-2">
+          <h3 className="font-(family-name:--font-dancing) text-3xl md:text-4xl">
+            {submitted?.name ? `Cảm ơn ${submitted.name}!` : "Cảm ơn bạn!"}
+          </h3>
+          <p className="text-ink/80 mx-auto max-w-md text-base md:text-lg">
+            {attending
+              ? "Chúng tôi rất hân hạnh được đón tiếp bạn."
+              : "Rất tiếc bạn không thể đến, nhưng chúng tôi vô cùng trân trọng tình cảm của bạn."}
+          </p>
+        </div>
 
-        <p className="text-ink/80 max-w-md text-base md:text-lg">
-          {attending
-            ? "Chúng tôi rất hân hạnh được đón tiếp bạn trong ngày trọng đại của mình."
-            : "Rất tiếc bạn không thể đến, nhưng chúng tôi vô cùng trân trọng tình cảm của bạn."}
-        </p>
-
+        {/* Tóm tắt */}
         {attending && submitted && (
-          <div className="border-lime/60 rounded-full border-2 bg-white/60 px-5 py-2 text-base font-semibold md:text-lg">
-            Số người tham dự: {submitted.guests}
-          </div>
+          <dl className="border-lime/60 divide-lime/40 grid w-full max-w-md grid-cols-2 divide-x rounded-2xl border-2 bg-white/70 text-left">
+            <div className="space-y-1 p-4">
+              <dt className="text-ink/60 flex items-center gap-1.5 text-xs tracking-wide uppercase">
+                <Users size={14} aria-hidden /> Số người
+              </dt>
+              <dd className="text-xl font-semibold">{submitted.guests}</dd>
+            </div>
+            {dateText && (
+              <div className="space-y-1 p-4">
+                <dt className="text-ink/60 flex items-center gap-1.5 text-xs tracking-wide uppercase">
+                  <CalendarPlus size={14} aria-hidden /> Thời gian
+                </dt>
+                <dd className="text-base leading-snug font-semibold">
+                  <span className="capitalize">{dateText}</span>
+                  <span className="text-ink/70 block text-sm font-medium">
+                    {timeText}
+                  </span>
+                </dd>
+              </div>
+            )}
+          </dl>
         )}
 
-        <button
-          type="button"
-          onClick={handleEdit}
-          className="text-ink/60 hover:text-ink text-sm underline underline-offset-4 transition"
-        >
-          Chỉnh sửa
-        </button>
+        {/* Hành động */}
+        <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
+          {attending && calendarUrl && (
+            <a
+              href={calendarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green hover:bg-green/90 flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg px-5 text-sm font-semibold tracking-widest text-white uppercase transition"
+            >
+              <CalendarPlus size={18} aria-hidden /> Thêm vào lịch
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={handleEdit}
+            className="border-lime/60 text-ink hover:border-green flex min-h-11 flex-1 items-center justify-center gap-2 rounded-lg border-2 bg-white/60 px-5 text-sm font-semibold transition"
+          >
+            <Pencil size={16} aria-hidden /> Chỉnh sửa
+          </button>
+        </div>
       </div>
     );
   }
