@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import HeroSection from "@/components/hero-section/hero-section";
 import Background from "@/components/ui/background";
 
+export const instant = false;
+
 const TimelineSection = dynamic(
   () => import("@/components/timeline-section/timeline-section"),
 );
