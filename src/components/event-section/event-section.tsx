@@ -7,14 +7,14 @@ import EventCalendar from "./event-calendar";
 import { parseDatePart } from "@/lib/date";
 
 export default function EventSection({ reveal }: { reveal?: SectionReveal }) {
-  const { weddingDate } = useStore();
+  const { weddingDate, side } = useStore();
   const { time, weekday } = parseDatePart(weddingDate);
 
   return (
     <Section reveal={reveal}>
       <SectionHeading
         eyebrow="Ngày trọng đại"
-        title="Thân mời quý khách đến dự lễ Thành hôn"
+        title={`Thân mời quý khách đến dự lễ ${side == "groom" ? "Thành Hôn" : "Vu Quy"}`}
         subtitle={`Được tổ chức vào lúc ${time}, ${weekday}`}
       />
 
