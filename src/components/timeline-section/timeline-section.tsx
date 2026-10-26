@@ -4,8 +4,8 @@ import Timeline from "./timeline";
 
 const STEPS = [
   { time: "11:00", label: "Đón khách" },
-  { time: "12:00", label: "Lễ thành hôn" },
-  { time: "12:30", label: "Khai tiệc" },
+  { time: "11:30", label: "Lễ thành hôn" },
+  { time: "12:00", label: "Khai tiệc" },
 ];
 
 export default function TimelineSection({

@@ -11,7 +11,7 @@ export default function CountdownSection({
   return (
     <div className="relative overflow-hidden px-6 py-20 text-center md:py-28">
       <Image
-        src="/background_forest.png"
+        src="/background_forest.webp"
         alt="countdown-background"
         fill
         sizes="100vw"
