@@ -21,8 +21,8 @@ const RsvpSection = dynamic(
 const CountdownSection = dynamic(
   () => import("@/components/countdown-section/countdown-section"),
 );
-const GuestBookSection = dynamic(
-  () => import("@/components/guestbook-section/guestbook-section"),
+const WishSection = dynamic(
+  () => import("@/components/wish-section/wish-section"),
 );
 const Footer = dynamic(() => import("@/components/footer/footer"));
 
@@ -36,7 +36,7 @@ export default function Home() {
       <TimelineSection reveal="left" />
       <RsvpSection reveal="right" />
       <CountdownSection reveal="left" />
-      <GuestBookSection reveal="right" />
+      <WishSection reveal="right" />
       <Footer />
     </main>
   );

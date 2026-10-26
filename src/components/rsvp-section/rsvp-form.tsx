@@ -74,7 +74,7 @@ export default function RsvpForm({ className }: { className?: string }) {
 
   // Submit through a transition instead of <form action>, so React does NOT
   // reset the fields when the server returns an error.
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (choice === null) return;
 

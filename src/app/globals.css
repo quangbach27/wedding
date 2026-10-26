@@ -7,8 +7,12 @@
 
   --color-gold-light: var(--gold-light);
   --color-gold: var(--gold);
+  --color-gold-dark: var(--gold-dark);
   --color-lime: var(--lime);
   --color-green: var(--green);
+  --color-olive-600: var(--olive-600);
+  --color-olive-700: var(--olive-700);
+  --color-emerald-700: var(--emerald-700);
   --color-mint: var(--mint);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
@@ -17,8 +21,12 @@
 :root {
   --gold-light: #d9c79a;
   --gold: #b99a5b;
+  --gold-dark: #85691f;
   --lime: #badc58;
   --green: #6ab04c;
+  --olive-600: #607d24;
+  --olive-700: #49651d;
+  --emerald-700: #36784c;
   --mint: #b8e994;
   --cream: #faf9f3;
   --ink: #2f3d22;
@@ -38,6 +46,81 @@ body {
 
 html {
   overflow-x: clip;
+}
+
+@keyframes wish-sheet-enter {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wish-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 1rem)) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes wish-backdrop-enter {
+  from {
+    background-color: transparent;
+    backdrop-filter: blur(0);
+  }
+  to {
+    background-color: rgb(47 61 34 / 55%);
+    backdrop-filter: blur(2px);
+  }
+}
+
+dialog.wish-dialog[open] {
+  animation: wish-sheet-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+dialog.wish-dialog[open]::backdrop {
+  animation: wish-backdrop-enter 320ms ease-out both;
+}
+
+@media (min-width: 640px) {
+  dialog.wish-dialog[open] {
+    animation: wish-dialog-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.wish-dialog[open],
+  dialog.wish-dialog[open]::backdrop {
+    animation: none;
+  }
+}
+
+@keyframes wish-success-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wish-success-enter {
+  animation: wish-success-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wish-success-enter {
+    animation: none;
+  }
 }
 
 @keyframes fall {
