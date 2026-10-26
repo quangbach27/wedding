@@ -33,16 +33,16 @@ export default function WishesPage() {
       <div className="border-gold-light/50 mx-auto grid h-full min-h-0 max-w-6xl grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-2xl border bg-linear-to-br from-[#f7f8e9] via-[#fbfaf3] to-[#f5f0df] shadow-[0_18px_55px_-32px_rgba(47,61,34,0.45)] md:grid-cols-2 md:grid-rows-1">
         <section className="flex flex-col justify-center px-6 py-6 sm:px-10 sm:py-8 md:min-h-0 md:px-12 md:py-10 lg:px-16">
           <div className="max-w-lg">
-            <span className="text-gold-dark inline-flex items-center gap-2 rounded-full border border-gold-light/60 bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide">
+            <span className="text-gold-dark border-gold-light/60 inline-flex items-center gap-2 rounded-full border bg-white/70 px-3 py-1 text-xs font-semibold tracking-wide">
               <Heart aria-hidden="true" className="size-3.5 fill-current" />
               Sổ lưu bút
             </span>
-            <h1 className="text-green mt-5 font-script text-5xl leading-tight font-bold sm:text-6xl lg:text-7xl">
+            <h1 className="text-green font-script mt-5 text-5xl leading-tight font-bold sm:text-6xl lg:text-7xl">
               Lời chúc phúc
             </h1>
             <p className="text-ink/75 mt-4 max-w-md text-sm leading-relaxed sm:text-base">
-              Gửi đến cô dâu và chú rể những lời yêu thương, để lại dấu ấn
-              trong ngày trọng đại của chúng tôi.
+              Gửi đến cô dâu và chú rể những lời yêu thương, để lại dấu ấn trong
+              ngày trọng đại của chúng tôi.
             </p>
 
             <WishModal
@@ -64,7 +64,7 @@ export default function WishesPage() {
           <SectionHeading
             title="Lời chúc yêu thương"
             subtitle="Từ gia đình và bạn bè"
-            className="mb-4 shrink-0 items-start text-left"
+            className="mb-4 hidden shrink-0 items-start text-left md:block"
           />
           <div className="flex min-h-0 flex-1 flex-col">
             <Suspense fallback={<WishWallFallback />}>
