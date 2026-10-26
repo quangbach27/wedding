@@ -2,7 +2,7 @@
 
 import { createWish } from "@/lib/actions/wish";
 import { cn } from "@/lib/utils";
-import { Check, LoaderCircle, Send } from "lucide-react";
+import { ArrowDown, Check, LoaderCircle, Send } from "lucide-react";
 import {
   startTransition,
   useActionState,
@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import ViewWishesButton from "./view-wish-button";
+import Link from "next/link";
 
 export default function WishForm({
   className,
@@ -71,7 +72,7 @@ export default function WishForm({
       />
       {showSuccess && (
         <div className="wish-success-enter flex flex-col items-center gap-4 py-6 text-center">
-          <span className="flex size-14 items-center justify-center rounded-full bg-green/10 text-green ring-1 ring-green/20">
+          <span className="bg-green/10 text-green ring-green/20 flex size-14 items-center justify-center rounded-full ring-1">
             <Check aria-hidden="true" className="size-7" strokeWidth={2.5} />
           </span>
           <div role="status">
@@ -85,7 +86,7 @@ export default function WishForm({
           <button
             type="button"
             onClick={() => setShowSuccess(false)}
-            className="text-green hover:bg-green/5 focus-visible:outline-gold-dark rounded-full border border-green/30 px-5 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="text-green hover:bg-green/5 focus-visible:outline-gold-dark border-green/30 rounded-full border px-5 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Gửi lời chúc khác
           </button>
@@ -146,7 +147,7 @@ export default function WishForm({
             {pending ? (
               <LoaderCircle
                 aria-hidden="true"
-                className="size-[18px] animate-spin"
+                className="size-4.5 animate-spin"
               />
             ) : (
               <Send aria-hidden="true" size={18} />
@@ -155,7 +156,17 @@ export default function WishForm({
           </button>
         </>
       )}
-      {!hideWishesLink && <ViewWishesButton href="/wishes" />}
+
+      <Link
+        href="/wishes"
+        className="group text-ink decoration-ink/35 hover:decoration-ink relative z-10 mx-auto mt-2 flex w-fit items-center gap-1 py-2 text-[13px] font-medium underline underline-offset-4 transition"
+      >
+        Xem sổ lưu bút
+        <ArrowDown
+          aria-hidden
+          className="size-3.5 transition-transform duration-300 motion-safe:group-hover:translate-y-0.5"
+        />
+      </Link>
     </form>
   );
 }
