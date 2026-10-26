@@ -70,7 +70,7 @@ export function WishCard({
           </time>
         </div>
 
-        <WishMessage text={message} lines={highlight ? 4 : 3} />
+        <WishMessage text={message} lines={2} />
       </div>
     </article>
   );
@@ -145,7 +145,7 @@ export function WishMessage({ text, lines = 3 }: { text: string; lines?: 2 | 3 |
       <p
         ref={ref}
         id={id}
-        className={`text-ink/80 mt-1 break-words whitespace-pre-wrap ${
+        className={`text-ink/80 mt-1 wrap-break-word whitespace-pre-wrap ${
           expanded ? "" : clamp
         }`}
       >

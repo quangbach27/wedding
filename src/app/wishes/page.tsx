@@ -29,7 +29,7 @@ function WishWallFallback() {
 
 export default function WishesPage() {
   return (
-    <main className="h-dvh overflow-hidden px-4 py-4 sm:px-6 sm:py-6">
+    <main className="h-dvh overflow-hidden p-2 sm:p-5">
       <div className="border-gold-light/50 mx-auto grid h-full min-h-0 max-w-6xl grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-2xl border bg-linear-to-br from-[#f7f8e9] via-[#fbfaf3] to-[#f5f0df] shadow-[0_18px_55px_-32px_rgba(47,61,34,0.45)] md:grid-cols-2 md:grid-rows-1">
         <section className="flex flex-col justify-center px-6 py-6 sm:px-10 sm:py-8 md:min-h-0 md:px-12 md:py-10 lg:px-16">
           <div className="max-w-lg">
@@ -37,10 +37,10 @@ export default function WishesPage() {
               <Heart aria-hidden="true" className="size-3.5 fill-current" />
               Sổ lưu bút
             </span>
-            <h1 className="text-green font-script mt-5 text-5xl leading-tight font-bold sm:text-6xl lg:text-7xl">
+            <h1 className="text-green font-script mt-2 text-5xl leading-tight font-bold sm:text-6xl lg:text-7xl">
               Lời chúc phúc
             </h1>
-            <p className="text-ink/75 mt-4 max-w-md text-sm leading-relaxed sm:text-base">
+            <p className="text-ink/75 mt-4 max-w-md text-sm leading-relaxed sm:text-base hidden md:block">
               Gửi đến cô dâu và chú rể những lời yêu thương, để lại dấu ấn trong
               ngày trọng đại của chúng tôi.
             </p>

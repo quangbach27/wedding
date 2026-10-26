@@ -26,7 +26,7 @@ export default function WishModal({ trigger }: { trigger: ReactNode }) {
         type="button"
         onClick={openModal}
         aria-haspopup="dialog"
-        className="bg-green hover:bg-green/90 focus-visible:outline-gold-dark mt-7 flex w-full max-w-md cursor-pointer items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold tracking-[0.16em] text-white uppercase shadow-lg shadow-green/20 transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2"
+        className="bg-green hover:bg-green/90 focus-visible:outline-gold-dark mt-2 md:mt-7 flex w-full max-w-md cursor-pointer items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold tracking-[0.16em] text-white uppercase shadow-lg shadow-green/20 transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2"
       >
         {trigger}
       </button>

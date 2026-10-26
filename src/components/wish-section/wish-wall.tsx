@@ -18,6 +18,7 @@ export default function WishWallList({
   const isLoadingRef = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const latest = page.items[0] ?? null;
   const wishes = page.items.slice(1);
 
@@ -195,11 +196,27 @@ export default function WishWallList({
 
       <div
         ref={scrollContainerRef}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch]"
         aria-label="Danh sách lời chúc có thể cuộn"
         onWheel={() => setAutoScroll(false)}
-        onTouchStart={() => setAutoScroll(false)}
-        onPointerDown={() => setAutoScroll(false)}
+        onTouchStart={(event) => {
+          touchStartYRef.current =
+            event.touches.length === 1 ? event.touches[0].clientY : null;
+        }}
+        onTouchMove={(event) => {
+          const startY = touchStartYRef.current;
+          const currentY = event.touches[0]?.clientY;
+          if (startY !== null && currentY !== undefined && Math.abs(currentY - startY) > 8) {
+            touchStartYRef.current = null;
+            setAutoScroll(false);
+          }
+        }}
+        onTouchEnd={() => {
+          touchStartYRef.current = null;
+        }}
+        onTouchCancel={() => {
+          touchStartYRef.current = null;
+        }}
         onKeyDown={() => setAutoScroll(false)}
       >
         {wishes.length > 0 ? (
