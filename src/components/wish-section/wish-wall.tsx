@@ -124,7 +124,8 @@ export default function WishWallList({
 
     let animationFrame = 0;
     let previousTime = 0;
-    const pixelsPerSecond = 18;
+    let position = container.scrollTop;
+    const pixelsPerSecond = 30;
 
     const scroll = (time: number) => {
       if (!previousTime) previousTime = time;
@@ -132,15 +133,20 @@ export default function WishWallList({
       previousTime = time;
 
       const maxScroll = container.scrollHeight - container.clientHeight;
+      if (Math.abs(container.scrollTop - position) > 1) {
+        position = container.scrollTop;
+      }
+
       if (maxScroll > 0) {
-        if (container.scrollTop >= maxScroll - 1) {
-          container.scrollTop = 0;
+        if (position >= maxScroll - 1) {
+          position = 0;
         } else {
-          container.scrollTop = Math.min(
-            container.scrollTop + (pixelsPerSecond * elapsed) / 1000,
+          position = Math.min(
+            position + (pixelsPerSecond * elapsed) / 1000,
             maxScroll,
           );
         }
+        container.scrollTo({ top: position, behavior: "instant" });
       }
 
       animationFrame = window.requestAnimationFrame(scroll);
@@ -196,7 +202,7 @@ export default function WishWallList({
 
       <div
         ref={scrollContainerRef}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch]"
+        className="min-h-0 max-h-[60dvh] flex-1 overflow-y-auto overscroll-contain pr-1 [-webkit-overflow-scrolling:touch] md:max-h-none"
         aria-label="Danh sách lời chúc có thể cuộn"
         onWheel={() => setAutoScroll(false)}
         onTouchStart={(event) => {
@@ -206,7 +212,11 @@ export default function WishWallList({
         onTouchMove={(event) => {
           const startY = touchStartYRef.current;
           const currentY = event.touches[0]?.clientY;
-          if (startY !== null && currentY !== undefined && Math.abs(currentY - startY) > 8) {
+          if (
+            startY !== null &&
+            currentY !== undefined &&
+            Math.abs(currentY - startY) > 8
+          ) {
             touchStartYRef.current = null;
             setAutoScroll(false);
           }
