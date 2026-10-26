@@ -9,13 +9,18 @@ import {
   useState,
 } from "react";
 import { cn } from "@/lib/utils";
-import { createRsvp } from "@/lib/actions/rsvp";
+import { createRsvp, updateRsvp } from "@/lib/actions/rsvp";
 import { useStore } from "@/stores/store";
 
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 10;
 
-type Submitted = { name: string; attending: "yes" | "no"; guests: number };
+type Submitted = {
+  id?: string;
+  name: string;
+  attending: "yes" | "no";
+  guests: number;
+};
 
 const clamp = (n: number) =>
   Number.isNaN(n)
@@ -23,7 +28,14 @@ const clamp = (n: number) =>
     : Math.min(MAX_GUESTS, Math.max(MIN_GUESTS, Math.trunc(n)));
 
 export default function RsvpForm({ className }: { className?: string }) {
-  const [state, formAction, pending] = useActionState(createRsvp, {});
+  const [createState, createFormAction, createPending] = useActionState(
+    createRsvp,
+    {},
+  );
+  const [updateState, updateFormAction, updatePending] = useActionState(
+    updateRsvp,
+    {},
+  );
   const { side, weddingDate } = useStore();
   const storageKey = `rsvp:${side}`;
 
@@ -33,6 +45,9 @@ export default function RsvpForm({ className }: { className?: string }) {
   const [confirmed, setConfirmed] = useState(false);
   const [submitted, setSubmitted] = useState<Submitted | null>(null);
 
+  const isEditing = Boolean(submitted?.id);
+  const state = isEditing ? updateState : createState;
+  const pending = isEditing ? updatePending : createPending;
   const guestsRef = useRef<HTMLInputElement>(null);
   const pendingRef = useRef<Submitted | null>(null);
 
@@ -43,10 +58,23 @@ export default function RsvpForm({ className }: { className?: string }) {
     try {
       const raw = localStorage.getItem(storageKey);
       if (raw) {
-        const saved = JSON.parse(raw) as Submitted;
-        setSubmitted(saved);
-        setChoice(saved.attending);
-        setConfirmed(true);
+        const saved = JSON.parse(raw) as Partial<Submitted>;
+        if (
+          typeof saved.name === "string" &&
+          (saved.attending === "yes" || saved.attending === "no") &&
+          typeof saved.guests === "number"
+        ) {
+          const response = {
+            ...saved,
+            id:
+              typeof saved.id === "string" && /^[1-9]\d*$/.test(saved.id)
+                ? saved.id
+                : undefined,
+          } as Submitted;
+          setSubmitted(response);
+          setChoice(response.attending);
+          setConfirmed(true);
+        }
       }
     } catch {
       // storage can be blocked (private mode, in-app browsers)
@@ -54,16 +82,18 @@ export default function RsvpForm({ className }: { className?: string }) {
     setReady(true);
   }, [storageKey]);
 
-  // When the server confirms, show the thank-you card and remember it
+  // Save the returned database ID only after the server confirms the write.
   useEffect(() => {
-    if (!state.success || !pendingRef.current) return;
-    const saved = pendingRef.current;
+    const result = submitted?.id ? updateState : createState;
+    if (!result.success || !result.id || !pendingRef.current) return;
+    const saved = { ...pendingRef.current, id: result.id };
+    pendingRef.current = null;
     setSubmitted(saved);
     setConfirmed(true);
     try {
       localStorage.setItem(storageKey, JSON.stringify(saved));
     } catch {}
-  }, [state, storageKey]);
+  }, [createState, submitted?.id, storageKey, updateState]);
 
   const changeGuests = (delta: number) => {
     const el = guestsRef.current;
@@ -86,13 +116,15 @@ export default function RsvpForm({ className }: { className?: string }) {
       guests: choice === "yes" ? clamp(Number(data.get("guests") ?? 1)) : 0,
     };
 
-    startTransition(() => formAction(data));
+    if (isEditing && submitted?.id) {
+      data.set("id", submitted.id);
+      startTransition(() => updateFormAction(data));
+    } else {
+      startTransition(() => createFormAction(data));
+    }
   };
 
   const handleEdit = () => {
-    try {
-      localStorage.removeItem(storageKey);
-    } catch {}
     setConfirmed(false);
   };
 
@@ -235,6 +267,9 @@ export default function RsvpForm({ className }: { className?: string }) {
     >
       <input type="hidden" name="side" value={side} />
       <input type="hidden" name="startedAt" value={startedAt} />
+      {isEditing && submitted?.id && (
+        <input type="hidden" name="id" value={submitted.id} />
+      )}
 
       {/* honeypot */}
       <input
@@ -375,6 +410,9 @@ export default function RsvpForm({ className }: { className?: string }) {
         <p className="text-sm text-red-600">
           Không xác định được thiệp mời ({state.errors.side[0]})
         </p>
+      )}
+      {state.errors?.id && (
+        <p className="text-sm text-red-600">{state.errors.id[0]}</p>
       )}
 
       {/* Server error (validation or database) */}

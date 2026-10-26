@@ -29,22 +29,31 @@ const toRsvp = (row: RsvpRow): Rsvp => ({
 });
 
 export const rsvpRepository = {
-  /**
-   * Business rule: a guest is identified by name (case-insensitive) + side.
-   * Answering again updates the existing row instead of creating a duplicate.
-   */
-  async upsert({ name, attending, guests, side }: RsvpInput): Promise<Rsvp> {
+  async create({ name, attending, guests, side }: RsvpInput): Promise<Rsvp> {
     const rows = (await sql`
       INSERT INTO rsvp (name, attending, guests, side)
       VALUES (${name}, ${attending}, ${guests}, ${side})
-      ON CONFLICT (lower(name), side)
-      DO UPDATE SET attending  = EXCLUDED.attending,
-                    guests     = EXCLUDED.guests,
-                    created_at = now()
       RETURNING id, name, attending, guests, side, created_at
     `) as RsvpRow[];
 
     return toRsvp(rows[0]);
+  },
+
+  async update(
+    id: string | number,
+    { name, attending, guests, side }: RsvpInput,
+  ): Promise<Rsvp | null> {
+    const rows = (await sql`
+      UPDATE rsvp
+      SET name = ${name},
+          attending = ${attending},
+          guests = ${guests},
+          side = ${side}
+      WHERE id = ${Number(id)}
+      RETURNING id, name, attending, guests, side, created_at
+    `) as RsvpRow[];
+
+    return rows[0] ? toRsvp(rows[0]) : null;
   },
 
   async getById(id: string | number): Promise<Rsvp | null> {

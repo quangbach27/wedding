@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { createRsvpSchema } from "../validation/rsvp";
-import { sql } from "../db";
 import { rsvpRepository } from "../repository/rsvp";
 
 export type RsvpState = {
@@ -11,22 +10,26 @@ export type RsvpState = {
     attending?: string[];
     guests?: string[];
     side?: string[];
+    id?: string[];
   };
   message?: string | null;
   success?: boolean;
+  id?: string;
 };
 
-export async function createRsvp(
-  _prevState: RsvpState,
-  formData: FormData,
-): Promise<RsvpState> {
-  const parsed = createRsvpSchema.safeParse({
+const parseRsvp = (formData: FormData) =>
+  createRsvpSchema.safeParse({
     name: formData.get("name"),
     attending: formData.get("attending"),
     guests: formData.get("guests") ?? 0,
     side: formData.get("side"),
   });
 
+export async function createRsvp(
+  _prevState: RsvpState,
+  formData: FormData,
+): Promise<RsvpState> {
+  const parsed = parseRsvp(formData);
   if (!parsed.success) {
     return {
       errors: z.flattenError(parsed.error).fieldErrors,
@@ -37,11 +40,55 @@ export async function createRsvp(
   const { name, attending, guests, side } = parsed.data;
 
   try {
-    await rsvpRepository.upsert({ name, attending, guests, side });
+    const rsvp = await rsvpRepository.create({ name, attending, guests, side });
+    return {
+      id: rsvp.id,
+      success: true,
+      message: "Cảm ơn bạn đã xác nhận!",
+    };
   } catch (error) {
-    console.error("RSVP insert failed:", error);
+    console.error("RSVP create failed:", error);
     return { message: "Có lỗi xảy ra. Vui lòng thử lại sau." };
   }
+}
 
-  return { success: true, message: "Cảm ơn bạn đã xác nhận!" };
+export async function updateRsvp(
+  _prevState: RsvpState,
+  formData: FormData,
+): Promise<RsvpState> {
+  const parsed = parseRsvp(formData);
+  const id = z
+    .string()
+    .regex(/^[1-9]\d*$/, "Mã xác nhận không hợp lệ")
+    .safeParse(formData.get("id"));
+
+  if (!parsed.success || !id.success) {
+    const errors = parsed.success
+      ? {}
+      : z.flattenError(parsed.error).fieldErrors;
+    return {
+      errors: {
+        ...errors,
+        ...(!id.success ? { id: [id.error.issues[0].message] } : {}),
+      },
+      message: "Thông tin chưa hợp lệ. Vui lòng kiểm tra lại.",
+    };
+  }
+
+  try {
+    const rsvp = await rsvpRepository.update(id.data, parsed.data);
+    if (!rsvp) {
+      return {
+        message: "Không tìm thấy xác nhận này. Vui lòng tải lại trang.",
+      };
+    }
+    return {
+      id: rsvp.id,
+      success: true,
+      message: "Thông tin tham dự đã được cập nhật!",
+    };
+  } catch (error) {
+    console.error("RSVP update failed:", error);
+    return { message: "Có lỗi xảy ra. Vui lòng thử lại sau." };
+  }
 }
