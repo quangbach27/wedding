@@ -1,10 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { wishSchema } from "../validation/wish";
-import { sql } from "../db";
 import { wishRepository } from "../repository/wish";
+import { checkActionRateLimit } from "./rate-limit";
 
 export type WishState = {
   errors?: {
@@ -19,6 +18,18 @@ export async function createWish(
   _prevState: WishState,
   formData: FormData,
 ): Promise<WishState> {
+  try {
+    const rateLimit = await checkActionRateLimit("wish", 20, 400);
+    if (!rateLimit.ok) {
+      return {
+        message: `Bạn đã gửi quá nhiều lời chúc. Vui lòng thử lại sau ${rateLimit.retryAfter} giây.`,
+      };
+    }
+  } catch (error) {
+    console.error("Wish rate limit failed:", error);
+    return { message: "Có lỗi xảy ra. Vui lòng thử lại sau." };
+  }
+
   const honeypot = String(formData.get("website") ?? "");
   const startedAt = Number(formData.get("startedAt") ?? 0);
   const elapsed = Date.now() - startedAt;

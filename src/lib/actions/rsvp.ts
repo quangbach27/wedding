@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { createRsvpSchema } from "../validation/rsvp";
 import { rsvpRepository } from "../repository/rsvp";
+import { checkActionRateLimit } from "./rate-limit";
 
 export type RsvpState = {
   errors?: {
@@ -29,6 +30,18 @@ export async function createRsvp(
   _prevState: RsvpState,
   formData: FormData,
 ): Promise<RsvpState> {
+  try {
+    const rateLimit = await checkActionRateLimit("rsvp", 20, 400);
+    if (!rateLimit.ok) {
+      return {
+        message: `Bạn đã gửi quá nhiều xác nhận. Vui lòng thử lại sau ${rateLimit.retryAfter} giây.`,
+      };
+    }
+  } catch (error) {
+    console.error("RSVP rate limit failed:", error);
+    return { message: "Có lỗi xảy ra. Vui lòng thử lại sau." };
+  }
+
   const parsed = parseRsvp(formData);
   if (!parsed.success) {
     return {
@@ -56,6 +69,18 @@ export async function updateRsvp(
   _prevState: RsvpState,
   formData: FormData,
 ): Promise<RsvpState> {
+  try {
+    const rateLimit = await checkActionRateLimit("rsvp", 20, 400);
+    if (!rateLimit.ok) {
+      return {
+        message: `Bạn đã gửi quá nhiều xác nhận. Vui lòng thử lại sau ${rateLimit.retryAfter} giây.`,
+      };
+    }
+  } catch (error) {
+    console.error("RSVP rate limit failed:", error);
+    return { message: "Có lỗi xảy ra. Vui lòng thử lại sau." };
+  }
+
   const parsed = parseRsvp(formData);
   const id = z
     .string()
