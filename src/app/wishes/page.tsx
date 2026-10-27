@@ -37,10 +37,10 @@ export default function WishesPage() {
               <Heart aria-hidden="true" className="size-3.5 fill-current" />
               Sổ lưu bút
             </span>
-            <h1 className="text-green font-script mt-2 text-5xl leading-tight font-bold sm:text-6xl lg:text-7xl">
+            <h1 className="text-green font-script mt-2 text-5xl leading-tight font-bold sm:text-6xl md:mt-5 lg:text-7xl">
               Lời chúc phúc
             </h1>
-            <p className="text-ink/75 mt-4 max-w-md text-sm leading-relaxed sm:text-base hidden md:block">
+            <p className="text-ink/75 mt-4 hidden max-w-md text-sm leading-relaxed sm:text-base md:block">
               Gửi đến cô dâu và chú rể những lời yêu thương, để lại dấu ấn trong
               ngày trọng đại của chúng tôi.
             </p>

@@ -10,7 +10,6 @@ import {
   useRef,
   useState,
 } from "react";
-import ViewWishesButton from "./view-wish-button";
 import Link from "next/link";
 
 export default function WishForm({
@@ -156,17 +155,18 @@ export default function WishForm({
           </button>
         </>
       )}
-
-      <Link
-        href="/wishes"
-        className="group text-ink decoration-ink/35 hover:decoration-ink relative z-10 mx-auto mt-2 flex w-fit items-center gap-1 py-2 text-[13px] font-medium underline underline-offset-4 transition"
-      >
-        Xem sổ lưu bút
-        <ArrowDown
-          aria-hidden
-          className="size-3.5 transition-transform duration-300 motion-safe:group-hover:translate-y-0.5"
-        />
-      </Link>
+      {!hideWishesLink && (
+        <Link
+          href="/wishes"
+          className="group text-ink decoration-ink/35 hover:decoration-ink relative z-10 mx-auto mt-2 flex w-fit items-center gap-1 py-2 text-[13px] font-medium underline underline-offset-4 transition"
+        >
+          Xem sổ lưu bút
+          <ArrowDown
+            aria-hidden
+            className="size-3.5 transition-transform duration-300 motion-safe:group-hover:translate-y-0.5"
+          />
+        </Link>
+      )}
     </form>
   );
 }

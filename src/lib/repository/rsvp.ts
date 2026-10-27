@@ -19,6 +19,13 @@ type RsvpRow = {
   created_at: string | Date;
 };
 
+export type Attendee = {
+  id: string;
+  name: string;
+  guests: number;
+  side: RsvpInput["side"];
+};
+
 const toRsvp = (row: RsvpRow): Rsvp => ({
   id: String(row.id),
   name: row.name,
@@ -27,6 +34,8 @@ const toRsvp = (row: RsvpRow): Rsvp => ({
   side: row.side,
   createdAt: new Date(row.created_at).toISOString(),
 });
+
+type AttendeeRow = Pick<RsvpRow, "id" | "name" | "guests" | "side">;
 
 export const rsvpRepository = {
   async create({ name, attending, guests, side }: RsvpInput): Promise<Rsvp> {
@@ -65,5 +74,21 @@ export const rsvpRepository = {
     `) as RsvpRow[];
 
     return rows[0] ? toRsvp(rows[0]) : null;
+  },
+
+  async listAttendees(): Promise<Attendee[]> {
+    const rows = (await sql`
+      SELECT id, name, guests, side
+      FROM rsvp
+      WHERE attending = TRUE
+      ORDER BY side, id
+    `) as AttendeeRow[];
+
+    return rows.map((row) => ({
+      id: String(row.id),
+      name: row.name,
+      guests: row.guests,
+      side: row.side,
+    }));
   },
 };
