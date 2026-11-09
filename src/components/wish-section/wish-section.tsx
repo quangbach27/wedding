@@ -10,7 +10,7 @@ export default function GuestBookSection({
   return (
     <Section reveal={reveal}>
       <SectionHeading eyebrow="Sổ lưu bút" title="Gửi lời chúc phúc" />
-      <WishForm className="mx-auto max-w-3xl" />
+      <WishForm className="mx-auto max-w-3xl" hideWishesLink/>
     </Section>
   );
 }
